@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<JOBI name="PCK.AUTOMIC_DOCKER.PRV.INCLUDE.CHECK_JOBSTATUS">
+<HEADER state="1">
+<Title>Check the job status and logging</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:SWITCH &$PLATFORM#
+:CASE "WINDOWS"
+IF %ERRORLEVEL% EQU 0 (
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+) ELSE (
+IF %ERRORLEVEL% EQU 2 (
+:SET &TEMP# = "******** CONNECTION TIMED OUT ********"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR UC4RB_LOGGING_ERROR = TEMP
+) ELSE (
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR
+))
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.CHECK_CMDLINE_CMD@WINDOWS
+
+:CASE "UNIX"
+execcode=$?
+if [ $execcode -eq 0 ]
+then
+:  INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+elif [ $execcode -eq 2 ]
+  then
+:  SET &TEMP# = "******** CONNECTION TIMED OUT ********"
+:  INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR UC4RB_LOGGING_ERROR = TEMP
+else
+:  INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR
+fi
+if [ "$execcode" -ne "0" ]
+then
+    exit $execcode
+fi
+:OTHER
+:ENDSWITCH]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

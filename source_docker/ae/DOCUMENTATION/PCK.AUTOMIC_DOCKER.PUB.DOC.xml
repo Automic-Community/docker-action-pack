@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<DOCU name="PCK.AUTOMIC_DOCKER.PUB.DOC">
+<HEADER state="1">
+<Title>Package documentation</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<DOCU_Docu state="1" type="text">
+<DOC><![CDATA[About Docker
+================================
+Docker is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.
+
+About Automic's Docker Package
+================================
+
+Automate the usage of Docker commands through various actions. These actions are basic building blocks to achieve a specific business goal.
+E.g. Create Image/Create Container/Start Container/Stop Container/Build Image etc. on Docker system.
+
+=Supported Docker versions=
+Following versions of Docker are supported:
+* Docker 1.5
+* Docker 1.6
+* Docker 1.12
+
+This package can also be used to manage Windows Containers.
+
+=Limitations=
+* No known limitations.
+
+=Setup=
+* Oracle JRE 1.7 or higher must be installed on Agent OS and "java" must be set as executable on the same.
+* The Agent should be able to access the Docker daemon in order to make HTTP(s) requests.
+* Modify the http timeout parameters as per your environment. By default "CONNECTION_TIMEOUT" is defined as 30000 and "READ_TIMEOUT" is defined as 0. Both are defined in milliseconds. 0 means no timeout.
+* Docker daemon should be listening on specific IP Address and port.
+* If Docker daemon is set to use an encrypted socket (Secured way), then you should have a directory where all certificate files are present. E.g. ca.pem, cert.pem and key.pem files. Further this directory should be accessible by the Agent(s).
+* In order to run the predefined template(s), user has to first execute CONFIGURE_CONNECTION action. This action stores the docker connection details into VARA object PCK.AUTOMIC_DOCKER.PUB.VARA.CONN_SETTINGS.
+
+=Docker Setup to Manage Windows Containers=
+To manage windows contianers, docker should be installed on the system.
+* Install the Docker Engine: To install the docker engine, execute the following powershell commands.
+       Invoke-WebRequest "https://get.docker.com/builds/Windows/x86_64/docker-1.12.0.zip" -OutFile "$env:TEMP\docker-1.12.0.zip" -UseBasicParsing
+       Expand-Archive -Path "$env:TEMP\docker-1.12.0.zip" -DestinationPath $env:ProgramFiles   
+       [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Program Files\Docker", [EnvironmentVariableTarget]::Machine)
+* After installing of docker engine, it can be registered as as a Windows service: dockerd --register-service
+* Start docker service: Start-Service Docker
+* Enable the Docker RestAPI: The configuration file can be found at 'c:\ProgramData\docker\config\daemon.json'. If this file does not already exist, it can be created.
+  Put value in daemon.json file: {"hosts": ["npipe://", "tcp://0.0.0.0:2375"]} 
+* Restart docker service: restart-service docker
+
+=Variables=
+PCK.AUTOMIC_DOCKER.PRV.VARA.HTTP_PARAMETERS
+HTTP timeout parameters can be configured in this variable. Values are defined in milliseconds. 0 means no timeout.
+
+=Actions=
+Following actions are supported for Docker.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.GET_VERSION
+  Action Description: This action will print Docker version in AE report.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.SEARCH_IMAGE
+  Action Description: This action is used to search base images from docker public hub registry based on specified image name text. Output of this action will be an XML path consisting all the images based on the input and total number of records fetched. Moreover, XML file will be created on the same host where agent is running.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.INSPECT_IMAGE
+  Action Description: This action is used to inspect an existing image from the system where docker is installed based on specified image name text. Output of this action will be an XML path consisting all the low level information about specified image. Moreover, XML file will be created on the same host where agent is running.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.LIST_IMAGES
+  Action Description: This action is used to list all the existing images on docker system. Output of this action will be an XML path consisting all the existing images. Moreover, XML file will be created on the same host where agent is running.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.CREATE_IMAGE
+  Action Description: This action is used to create an image by pulling it from docker public repository. By default Image tag value is 'latest'. It will pull latest image as per the specified image name with image tag value 'latest'. It will pull all the images for the specified image name if tag is unspecified.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.CONFIGURE_CONNECTION
+  Action Description: This action is used to store the docker connection details. It first connects to docker using specified inputs. In case of success, it stores the docker connection information which can be further used in the subsequent actions.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.CREATE_CONTAINER
+  Action Description: This action is used to create a container in docker system from an existing image. Output of this action will be a container id and an XML path consisting container id along with additional information. Moreover, XML file will be created on the same host where agent is running.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.START_CONTAINER
+  Action Description: This action is used to start an existing container as per the specified container id
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.CHANGE_CONTAINER_STATE
+  Action Description: This action is used to change state of an existing container as per the specified action value. 
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.LIST_CONTAINERS
+  Action Description: This action is used to list all the existing/active containers as per the specified input. Output of this action will be an XML path consisting all the containers based on the input and total number of containers fetched. Moreover, XML file will be created on the same host where agent is running.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.REMOVE_CONTAINER
+  Action Description: This action is used to remove a container from docker as per the specified container id. Also it will remove associated volumes with the specified container id or can remove container forcefully as per the specified input. 
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.INSPECT_CONTAINER
+  Action Description: This action is used to inspect an existing container from the system where docker is installed based on the specified container id. Output of this action will be an XML path consisting all the low level information about specified container. Moreover, XML file will be created on the same host where agent is running.In case there is no image in docker system as per the specified image name text , Action will fail.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.EXEC_CREATE
+  Action Description: This action is used to set up an exec instance in a running container as per the specified container id. Output of this action will be an exec instance id. This Exec Id could be used to start the Exec on associated Docker Container where it was created. In case there is no Container corresponding to the container id in docker system, Action will fail.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.START_EXEC
+  Action Description: This action is used to start an exec instance in docker system. Output of this action will be written in a txt file or in job report depending on the inputs provided. If user do not provide folder path then txt file will be created on the same host where agent is running.
+This action will fail, if unable to connect with the docker server or Exec instance of corresponding Id does not exist in the docker system.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.EXPORT_CONTAINER
+  Action Description: This action is used to export an existing container. Output of this action will be a TAR file which contains exported container data. TAR file will be created as per the specified path otherwise will be created under agents's temp directory
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.REMOVE_IMAGE
+  Action Description: This action is used to remove an existing image from the docker system as per the specified inputs. User can provide 'image name' or 'image id' along with optional 'tag' separated by colon in the image name text box.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.BUILD_IMAGE
+  Action description: This action is used to create Docker Image from a Dockerfile. User will provide the path to .tar file containing Dockerfile and 'Image name' along with optional 'tag' separated by : in the Image name input. Further this action builds the image as per the instructions defined in Dockerfile. Image name can be given as xyz:1.1 where xyz is the name of image/repository and tag is 1.1
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.IMAGE_HISTORY
+  Action description: This action is used to fetch Image history from Docker system as per the specified 'Image name' input.
+
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.IMPORT_CONTAINER
+  Action description: This action imports the TAR file containing the contents of exported container as an image in the given docker system.
+  
+* Action Name: PCK.AUTOMIC_DOCKER.PUB.ACTION.QUIET_REMOVE_CONTAINER
+  Action description: This action is used to remove an existing container. It also cover the cases where container does not exist or it is paused.
+]]></DOC>
+</DOCU_Docu>
+</DOCU>
+</uc-export>

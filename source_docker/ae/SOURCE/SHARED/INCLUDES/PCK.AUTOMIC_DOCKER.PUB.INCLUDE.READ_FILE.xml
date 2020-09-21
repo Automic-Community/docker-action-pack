@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<JOBI name="PCK.AUTOMIC_DOCKER.PUB.INCLUDE.READ_FILE">
+<HEADER state="1">
+<Title>Read the file and store into string variable</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[! Reading xml file and pleace it in one AE variable
+:SET &HND# = PREP_PROCESS_FILE (&AGENT#, "&UC4RB_DKR_FILE_PATH#",,"COL=NONE", 'UC_LOGIN=&LOGIN#')
+:SET &UC4RB_DKR_FILE_CONTENT# = ""
+:PROCESS &HND#
+:   SET &LINE# = GET_PROCESS_LINE(&HND#)
+:   SET &UC4RB_DKR_FILE_CONTENT# =  STR_CAT(&UC4RB_DKR_FILE_CONTENT#, &LINE#)
+:ENDPROCESS
+:CLOSE_PROCESS &HND#
+]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

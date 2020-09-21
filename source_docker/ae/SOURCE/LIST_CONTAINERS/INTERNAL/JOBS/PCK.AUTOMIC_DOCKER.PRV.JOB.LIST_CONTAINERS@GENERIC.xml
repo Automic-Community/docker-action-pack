@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBS_GENERIC AttrType="GENERIC" name="PCK.AUTOMIC_DOCKER.PRV.JOB.LIST_CONTAINERS@GENERIC">
+<XHEADER state="1">
+<Title>list all existing containers</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<OUTPUTREG state="1">
+<FileReg/>
+</OUTPUTREG>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_JOBS state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<StartType/>
+<HostDst>|&lt;GENERIC&gt;|HOST</HostDst>
+<HostATTR_Type>GENERIC</HostATTR_Type>
+<CodeName/>
+<Login/>
+<IntAccount/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<AutoDeactNo>0</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>0</AutoDeactErrorFree>
+<DeactWhen/>
+<DeactDelay>0</DeactDelay>
+<AutoDeactAlways>1</AutoDeactAlways>
+<AttDialog>0</AttDialog>
+<ActAtRun>0</ActAtRun>
+<Consumption>0</Consumption>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+</ATTR_JOBS>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0| |</FcstStatus>
+
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+</dyntree>
+</DYNVALUES>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<PRE_SCRIPT mode="1" replacementmode="1" state="1">
+<PSCRI><![CDATA[:INCLUDE PCK.ITPA_SHARED.PUB.INCLUDE.START_STOP_JOB_ACCORDING_TO_AGENT_OS
+]]></PSCRI>
+</PRE_SCRIPT>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:INC PCK.AUTOMIC_DOCKER.PRV.INCLUDE.ECHO_ON_OFF
+:INC PCK.ITPA_SHARED.PUB.INCLUDE.ATTACH
+!-------------------------------------Logging input parameters-------------------------------------------------------------------------------------------------
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
+:SET &UC4RB_LOGGING_PARAMETER# = "Docker Base Url"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_BASE_URL#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+:SET &UC4RB_LOGGING_PARAMETER# = "Certification Path"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_CERTI_PATH#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+:SET &UC4RB_LOGGING_PARAMETER# = "List Active Conainers"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_LIST_OPTION#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+:SET &UC4RB_LOGGING_PARAMETER# = "Show size of containers"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_CONTAINER_SIZE#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+:SET &UC4RB_LOGGING_PARAMETER# = "Limit"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_LIMIT#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+:SET &UC4RB_LOGGING_PARAMETER# = "Since"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_SINCE#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+:SET &UC4RB_LOGGING_PARAMETER# = "Before"
+:SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_DKR_BEFORE#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Setting execution environment
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.CHANGE_DIRECTORY_TO_AGENT_BIN
+:INC PCK.AUTOMIC_DOCKER.PRV.INCLUDE.ATTACH_RESOURCE
+:INC PCK.AUTOMIC_DOCKER.PRV.INCLUDE.HTTP_TIMEOUT_PARAMETERS
+
+!------------------------------------------ Buidling java arguments --------------------------------------------------------------------------------------------
+! Building output file path
+:SET &AGENT_CURR_DIR# = GET_VAR('UC_EX_PATH_TEMP', &AGENT#)
+:SET &UC4RB_DKR_FILENAME# = "listContainers-&$RUNID#.xml"
+:PSET &UC4RB_DKR_LIST_CONTAINER_FILE# = STR_CAT(&AGENT_CURR_DIR#,&UC4RB_DKR_FILENAME#)
+
+! Writing Filters to a temp file if not empty
+:IF &UC4RB_DKR_FILTERS# <> ""
+:    SET &UC4RB_DKR_FILTERS_FILENAME# = "filters-&$RUNID#.xml"
+:    SET &UC4RB_DKR_FILTER_FILE_PATH# = STR_CAT(&AGENT_CURR_DIR#,&UC4RB_DKR_FILTERS_FILENAME#)
+
+:    SET &HND# = CREATE_PROCESS(NEW)
+:    SET &RET# = PUT_PROCESS_LINE(&HND#, &UC4RB_DKR_FILTERS#)
+:    SET &RETCODE# = WRITE_PROCESS(&HND#,"&UC4RB_DKR_FILTER_FILE_PATH#", "&AGENT#", "&LOGIN#", OVERWRITE)
+:    CLOSE_PROCESS &HND#
+
+!    validating if temp file has been created only then proceed otherwise abort the script
+:    IF &RETCODE# <> 0
+:       STOP MSG, 50, "HEADER: Aborting this job because temp filter file has not been created! RETCODE &RETCODE#"
+:    ENDIF
+:    SET &FINAL_FILTERS# = &UC4RB_DKR_FILTER_FILE_PATH#
+:ELSE
+:    SET &FINAL_FILTERS# = &UC4RB_DKR_FILTERS#
+:ENDIF
+
+:SET &UC4RB_DKR_ACTION_NAME# = "LIST_CONTAINERS"
+
+:DEFINE &UC4RB_DKR_ARGUMENTS#, string, 12
+
+: SET &UC4RB_DKR_ARGUMENTS#[1] = "&UC4RB_DKR_ACTION_NAME#"
+: SET &UC4RB_DKR_ARGUMENTS#[2] = "&UC4RB_DKR_CONNECTION_TIMEOUT#"
+: SET &UC4RB_DKR_ARGUMENTS#[3] = "&UC4RB_DKR_READ_TIMEOUT#"
+: SET &UC4RB_DKR_ARGUMENTS#[4] = "&UC4RB_DKR_BASE_URL#"
+: SET &UC4RB_DKR_ARGUMENTS#[5] = "&UC4RB_DKR_CERTI_PATH#"
+: SET &UC4RB_DKR_ARGUMENTS#[6] = "&UC4RB_DKR_LIST_OPTION#"
+: SET &UC4RB_DKR_ARGUMENTS#[7] = "&UC4RB_DKR_LIMIT#"
+: SET &UC4RB_DKR_ARGUMENTS#[8] = "&UC4RB_DKR_SINCE#"
+: SET &UC4RB_DKR_ARGUMENTS#[9] = "&UC4RB_DKR_BEFORE#"
+: SET &UC4RB_DKR_ARGUMENTS#[10] = "&FINAL_FILTERS#"
+: SET &UC4RB_DKR_ARGUMENTS#[11] = "&UC4RB_DKR_CONTAINER_SIZE#"
+: SET &UC4RB_DKR_ARGUMENTS#[12] = "&UC4RB_DKR_LIST_CONTAINER_FILE#"
+
+:INC PCK.AUTOMIC_DOCKER.PRV.INCLUDE.BUILD_JAVA_ARGUMENTS
+:PRINT 'java arguments...&UC4RB_DKR_JAVA_ARGUMENTS#'
+! Invoking java binary
+java -jar &UC4RB_DKR_PATH_JAR# &UC4RB_DKR_JAVA_ARGUMENTS#
+
+! Status messages
+:SET &UC4RB_LOGGING_INFO# = "******** LIST CONTAINERS ACTION EXECUTED SUCCESSFULLY ********"
+:SET &UC4RB_LOGGING_ERROR# = "******** LIST CONTAINERS ACTION FAILED ********"
+
+!------------------------------------------ Error Handling -----------------------------------------------------------------------------------------------------
+
+: INC PCK.AUTOMIC_DOCKER.PRV.INCLUDE.CHECK_JOBSTATUS
+]]></MSCRI>
+</SCRIPT>
+<OUTPUTSCAN state="1">
+<Inherit>N</Inherit>
+<filterobjects/>
+<HostFsc/>
+<LoginFsc/>
+</OUTPUTSCAN>
+<POST_SCRIPT mode="1" replacementmode="1" state="1">
+<OSCRI><![CDATA[! Publishing output file path in case of success
+
+:SET &STATUS# = GET_UC_OBJECT_STATUS(,,"RETCODE")
+:IF &STATUS#  = 0
+:      PUBLISH &UC4RB_DKR_LIST_CONTAINER_FILE#,,"TOP"
+!      Publishing total records found into one AE variable
+:      INC PCK.AUTOMIC_DOCKER.PUB.INCLUDE.READ_FILE UC4RB_DKR_FILE_PATH = UC4RB_DKR_LIST_CONTAINER_FILE
+:      SET &ROOTHND# = XML_OPEN(STRING, &UC4RB_DKR_FILE_CONTENT#)
+:      IF &ROOTHND# <> ""
+:          SET &TEMP# = XML_GET_CHILD_COUNT(&ROOTHND#)
+:          DEFINE &UC4RB_DKR_CONTAINER_COUNT#, unsigned
+:          SET &UC4RB_DKR_CONTAINER_COUNT# = CONVERT(unsigned,&TEMP#)
+:          PUBLISH &UC4RB_DKR_CONTAINER_COUNT# ,,"TOP"
+:      ENDIF
+:      XML_CLOSE
+
+:ELSE
+:   PSET &UC4RB_DKR_LIST_CONTAINER_FILE# = ""
+:   SET &UC4RB_DKR_CONTAINER_COUNT# =""
+:ENDIF]]></OSCRI>
+</POST_SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBS_GENERIC>
+</uc-export>

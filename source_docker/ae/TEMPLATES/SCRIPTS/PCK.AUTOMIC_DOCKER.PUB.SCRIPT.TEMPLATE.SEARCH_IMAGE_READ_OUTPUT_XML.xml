@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<SCRI name="PCK.AUTOMIC_DOCKER.PUB.SCRIPT.TEMPLATE.SEARCH_IMAGE_READ_OUTPUT_XML">
+<XHEADER state="1">
+<Title>Read search image output xml</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_SCRI state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<StartType/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<IntAccount/>
+<ActAtRun>1</ActAtRun>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+<AutoDeactNo>0</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>0</AutoDeactErrorFree>
+<DeactWhen/>
+<AutoDeactAlways>1</AutoDeactAlways>
+<DeactDelay>0</DeactDelay>
+</ATTR_SCRI>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0|U00000000 ??? ""</FcstStatus>
+<Ert>1</Ert>
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+</dyntree>
+</DYNVALUES>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:INC PCK.AUTOMIC_DOCKER.PUB.INCLUDE.READ_FILE UC4RB_DKR_FILE_PATH = UC4RB_DKR_IMAGES_FILE_PATH
+:  print "-----Retrieving first official image information-------"
+:  SET &STATUSFLAG# = "false" 
+! Get to Root
+: SET &ROOTHND# = XML_OPEN(STRING, &UC4RB_DKR_FILE_CONTENT#)
+: IF &ROOTHND# <> ""
+!    Get to Records
+:    SET &RECORDHND# = XML_GET_FIRST_CHILD(&ROOTHND#)
+:    WHILE &RECORDHND# <> ""
+:      SET &ISOFCELEM# = XML_SELECT_NODE(&RECORDHND#, "is_official")
+:      IF &ISOFCELEM# <> ""
+:          SET &ISOFCELEMVAL# =  XML_GET_NODE_TEXT(&ISOFCELEM#)
+:          IF &ISOFCELEMVAL# = "true"
+:              SET &STATUSFLAG# = "true" 
+:              print "Official Image found"
+:              SET &NAMEELEM# = XML_SELECT_NODE(&RECORDHND#, "name")
+:              IF &NAMEELEM# <> ""
+:                            SET &NAMEELEMVAL# =  XML_GET_NODE_TEXT(&NAMEELEM#)
+:                            print "Image Name : &NAMEELEMVAL#"
+:              ENDIF
+:              SET &DESCELEM# = XML_SELECT_NODE(&RECORDHND#, "description")
+:              IF &DESCELEM# <> ""
+:                            SET &DESCELEMVAL# =  XML_GET_NODE_TEXT(&DESCELEM#)
+:                            print "Image Description : &DESCELEMVAL#"
+:              ENDIF
+:              SET &RECORDHND# = ""
+:           ENDIF               
+:      ENDIF
+:      IF &RECORDHND# <> ""
+:        SET &RECORDHND# = XML_GET_NEXTSIBLING(&RECORDHND#)
+:      ENDIF
+:    ENDWHILE     
+: ENDIF
+: IF &STATUSFLAG# = "false"
+:   PRINT 'No official image found!!'  
+: ENDIF
+:XML_CLOSE
+]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</SCRI>
+</uc-export>

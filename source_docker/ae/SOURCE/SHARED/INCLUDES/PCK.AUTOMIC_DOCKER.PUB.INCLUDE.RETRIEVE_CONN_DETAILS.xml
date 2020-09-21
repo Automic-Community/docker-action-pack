@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<JOBI name="PCK.AUTOMIC_DOCKER.PUB.INCLUDE.RETRIEVE_CONN_DETAILS">
+<HEADER state="1">
+<Title>Retrive docker connection details for the given key</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:SET &VARA_OBJ_CONFIG# = "PCK.AUTOMIC_DOCKER.PUB.VARA.CONN_SETTINGS"
+:SET &UC4RB_DKR_BASE_URL# = GET_VAR(&VARA_OBJ_CONFIG#, "&UC4RB_DKR_HOST#",1) 
+:SET &UC4RB_DKR_CERTI_PATH# = GET_VAR(&VARA_OBJ_CONFIG#, "&UC4RB_DKR_HOST#",2) 
+]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

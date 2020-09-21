@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Properties>
+		<Property name="log-path">../temp</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="RollingFile" fileName="${log-path}/docker.log"
+			filePattern="${log-path}/docker-%d{dd-MMM-yyyy}-%i.log">
+			<PatternLayout>
+				<pattern>%d{dd-MMM-yyyy HH:mm:ss} - %-5p %c{1}[%M]: %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		<!-- Simplified console output -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss} - %-5p %c{1}[%M]: %m%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Logger name="root" level="debug" additivity="false">
+			<appender-ref ref="RollingFile" level="debug" />
+		</Logger>
+		<Root level="info" additivity="false">
+			<AppenderRef ref="RollingFile" />
+			<!--<AppenderRef ref="Console" /> -->
+		</Root>
+	</Loggers>
+</Configuration>

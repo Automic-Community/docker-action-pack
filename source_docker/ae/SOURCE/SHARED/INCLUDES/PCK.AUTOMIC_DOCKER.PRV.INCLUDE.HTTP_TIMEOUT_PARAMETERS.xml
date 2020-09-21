@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<JOBI name="PCK.AUTOMIC_DOCKER.PRV.INCLUDE.HTTP_TIMEOUT_PARAMETERS">
+<HEADER state="1">
+<Title>Retrieve timeout parameters</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:SET &VARA_OBJ_CONFIG# = "PCK.AUTOMIC_DOCKER.PRV.VARA.HTTP_PARAMETERS"
+:SET &UC4RB_DKR_CONNECTION_TIMEOUT# = GET_VAR(&VARA_OBJ_CONFIG#, "CONNECTION_TIMEOUT") 
+:SET &UC4RB_DKR_READ_TIMEOUT# = GET_VAR(&VARA_OBJ_CONFIG#, "READ_TIMEOUT")]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

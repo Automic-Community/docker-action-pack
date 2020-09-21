@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<PRPT name="PCK.AUTOMIC_DOCKER.PRV.PROMPTSET.START_EXEC">
+<HEADER state="1">
+<Title>Start a Exec instance in a docker container</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<PROMPTDESIGNER state="1">
+<DESIGNER/>
+</PROMPTDESIGNER>
+<PROMPTSETXUI state="1">
+<XUIEDITOR><![CDATA[<dialog height="424" icon="PRPT" id="PRPTS" left="0" top="0" width="441"><readpanel fill="b" id="PRPTBOX" nl="1" scroll="v" text="Enter information to start an exec instance"><properties><entry name="text">Enter information to start an exec instance</entry><entry name="modifiable">0</entry></properties><dynradiogroup alt="1" enabled="1" fill="b" focus="" id="UC4RB_DKR_DETACHs.00" nl="1" text="Detach" tooltip="Detach" required="0">
+      <properties>
+        <entry listparam="C,N" name="reference" reftype="STATIC">PCK.ITPA_SHARED.PRV.VARA.YES_NO</entry>
+        <entry name="xmlkey"/>
+        <entry name="xmlpath"/>
+        <entry name="text">Detach</entry>
+        <entry name="quotes"/>
+        <entry name="id">UC4RB_DKR_DETACHs.00</entry>
+        <entry name="enabled">0</entry>
+        <entry name="focus">0</entry>
+        <entry name="tooltip">Detach</entry>
+        <entry name="modifiable">1</entry>
+        <entry name="customfield"/>
+      <entry name="initvalue"/>
+         </properties>
+    </dynradiogroup><dynradiogroup alt="1" enabled="1" fill="b" focus="" id="UC4RB_DKR_SAVE_FILEs.00" nl="1" text="Save docker response in a file" tooltip="In case of &apos;YES&apos; response will be written in a file else will be written in a job report." required="0">
+      <properties>
+        <entry listparam="C,N" name="reference" reftype="STATIC">PCK.ITPA_SHARED.PRV.VARA.YES_NO</entry>
+        <entry name="xmlkey"/>
+        <entry name="xmlpath"/>
+        <entry name="text">Save docker response in a file</entry>
+        <entry name="quotes"/>
+        <entry name="id">UC4RB_DKR_SAVE_FILEs.00</entry>
+        <entry name="enabled">0</entry>
+        <entry name="focus">0</entry>
+        <entry name="tooltip">In case of &apos;YES&apos; response will be written in a file else will be written in a job report.</entry>
+        <entry name="modifiable">1</entry>
+        <entry name="customfield"/>
+      <entry name="initvalue"/>
+         </properties>
+    </dynradiogroup><text alt="1" enabled="1" fill="b" focus="0" id="UC4RB_DKR_FOLDER_PATHs.00" inputassistance="0" len="" multiline="0" multilineIcon="0" nl="1" regex="" required="0" separator=";" showaspassword="0" text="Folder path to save file" tooltip="Path where a response file will be generated and saved. Provide if save response in a file is &apos;YES&apos;. If empty , response file will be written at agent&apos;s temp directory." upper="0"><oninputassistant><command request="_internal" target="_view" targetaction="setAttribute" targetparam="promptname|@id"/><command request="_internal" target="_view" targetaction="setAttribute" targetparam="promptvalue|@value"/><command owner="_promptsetcontainer" owneraction="getData" request="getpromptinputassistance" target="_chainwindow"/></oninputassistant>
+         
+      <properties>
+        <entry listparam="C,N" name="reference" reftype="STATIC">UC_DATATYPE_STRING</entry>
+        <entry name="xmlkey"/>
+        <entry name="xmlpath"/>
+        <entry name="text">Folder path to save file</entry>
+        <entry name="multiline">0</entry>
+        <entry name="multilineIcon">0</entry>
+        <entry name="multiselect">0</entry>
+        <entry name="separator">;</entry>
+        <entry name="len"/>
+        <entry name="quotes"/>
+        <entry name="id">UC4RB_DKR_FOLDER_PATHs.00</entry>
+        <entry name="regex"/>
+        <entry name="inputassistance">0</entry>
+        <entry name="enabled">0</entry>
+        <entry name="required">0</entry>
+        <entry name="upper">0</entry>
+        <entry name="focus">0</entry>
+        <entry name="showaspassword">0</entry>
+        <entry name="tooltip">Path where a response file will be generated and saved. Provide if save response in a file is &apos;YES&apos;. If empty , response file will be written at agent&apos;s temp directory.</entry>
+        <entry name="modifiable">1</entry>
+        <entry name="customfield"/>
+        <entry name="onchangereset"/>
+        <entry name="resetable">1</entry>
+      <entry name="initvalue"/>
+         </properties>
+    </text></readpanel></dialog>]]></XUIEDITOR>
+</PROMPTSETXUI>
+<PROMPTSETDATA state="1">
+<DATAEDITOR><![CDATA[<PRPTS ontop="1"><PRPTBOX><UC4RB_DKR_DETACHs.00 haslist="0" msgnr="-1" msginsert="" altview="0" promptname="UC4RB_DKR_DETACH#" ReadFromTable="OPSE">NO</UC4RB_DKR_DETACHs.00><UC4RB_DKR_SAVE_FILEs.00 haslist="0" msgnr="-1" msginsert="" altview="0" promptname="UC4RB_DKR_SAVE_FILE#" ReadFromTable="OPSE">NO</UC4RB_DKR_SAVE_FILEs.00><UC4RB_DKR_FOLDER_PATHs.00 haslist="0" msgnr="-1" msginsert="" altview="0" promptname="UC4RB_DKR_FOLDER_PATH#" ReadFromTable="OPSE"></UC4RB_DKR_FOLDER_PATHs.00></PRPTBOX></PRPTS>]]></DATAEDITOR>
+</PROMPTSETDATA>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</PRPT>
+</uc-export>

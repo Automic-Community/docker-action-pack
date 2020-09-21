@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<uc-export clientvers="11.0.0-sprint.20141111.1610+build.2828">
+<JOBI name="PCK.AUTOMIC_DOCKER.PRV.INCLUDE.BUILD_JAVA_ARGUMENTS">
+<HEADER state="1">
+<Title>Build Java arguments using specified array.</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[: SET &UC4RB_DKR_JAVA_ARGUMENTS# = ""
+:SET &LEN# = LENGTH(&UC4RB_DKR_ARGUMENTS#[],SIZE)
+:SET &IDX# = 1 
+:WHILE &IDX# LE &LEN#
+: SET &TEMP# = STR_SUB(&UC4RB_DKR_ARGUMENTS#[&IDX#],"""","\""")
+: SET &UC4RB_DKR_JAVA_ARGUMENTS# = STR_CAT( &UC4RB_DKR_JAVA_ARGUMENTS#, """ ")
+: SET &UC4RB_DKR_JAVA_ARGUMENTS# = STR_CAT( &UC4RB_DKR_JAVA_ARGUMENTS#, &TEMP#)
+: SET &UC4RB_DKR_JAVA_ARGUMENTS# = STR_CAT( &UC4RB_DKR_JAVA_ARGUMENTS#, " "" ")
+:SET &IDX# = &IDX# + 1
+:ENDWHILE]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>
