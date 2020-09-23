@@ -1,4 +1,9 @@
 ## Getting Started:
+
+
+###### Description
+ This Docker action pack used to support the Docker feature on CA Automic One Automation Platform. [Check the Feature support by action pack](source_docker/README.md)
+
 ###### Prerequisite:
 	1. AE (Automation Engine) is installed. 
 	2. On AE, Please Install ITPA_SHARED and File System package.
@@ -17,7 +22,7 @@ There are two sub-commands:
 | doctor check | analyze and show up current environment issues	| apm doctor check   |
 | doctor fix   | repair environment issues	                | apm doctor fix     |
 
-###### Steps to install the CVS package on AE:
+###### Steps to install the action package on AE:
 	1. Clone the code to your machine.
 	2. Go to the package directory.
 	3. Run maven command if uses java action pack: mvn clean package
@@ -80,9 +85,9 @@ This command has the following option(s):
 |--system	|-S	 | No	   |NA	                        |Selected system                      |
 
 **Example: 
-apm build -y -H vvieintegr0201.sbb01.spoc.global -c 106 -u TEST/TEST -pw *** -d D:\Software\CA -o zip -v pck.automic_cvs
+apm build -y -H vvieintegr0201.sbb01.spoc.global -c 106 -u TEST/TEST -pw *** -d /directory/ -o zip -v action_pack_name
 Output: 
-Pack PCK.AUTOMIC_CVS was built successfully at D:\Software\CA\PCK.AUTOMIC_CVS_1.2.2.zip**
+Pack action_pack_name was built successfully at /directory/action_pack_name_version.zip**
 
 
 ###### Do or Don’t:
