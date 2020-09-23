@@ -2,7 +2,7 @@
 
 
 ###### Description
- This Docker action pack used to support the Docker feature on CA Automic One Automation Platform. [Check the Feature support by action pack](source_docker/README.md)
+ This Docker action pack used to support the Docker feature on CA Automic One Automation Platform. [Check the Feature support by action pack](source/README.md)
 
 ###### Prerequisite:
 	1. AE (Automation Engine) is installed. 
